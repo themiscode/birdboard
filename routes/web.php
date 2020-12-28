@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProjectsController;
+use Illuminate\Support\Facades\Auth;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,12 +19,27 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/projects', [ProjectsController::class, 'index']);
 
-Route::get('/projects', [ProjectsController::class, 'index']);
+    Route::get('/projects/create', [ProjectsController::class, 'create']);
+    
+    Route::get('/projects/{project}', [ProjectsController::class, 'show']);
+    
+    Route::post('/projects', [ProjectsController::class, 'store']);
+    
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+});
 
-Route::get('/projects/{project}', [ProjectsController::class, 'show']);
 
-Route::post('/projects', [ProjectsController::class, 'store'])->middleware('auth');
+
+Auth::routes();
+
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
