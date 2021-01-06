@@ -9,7 +9,7 @@
             <a href="/projects" class="tw-text-grey tw-text-sm tw-font-normal tw-no-underline">My Projects</a> / {{ $project->title }}
         </p>
 
-        <a href="/projects/create" class=" button">New Project</a>
+        <a href="{{ $project->path().'/edit' }}" class=" button">Edit Project</a>
 
     </div>
 
@@ -21,7 +21,18 @@
             <div class="tw-mb-8">
                 <h2 class="tw-text-lg tw-text-grey tw-font-normal">Tasks</h2>
                 @foreach ($project->tasks as $task)
-                    <div class="card tw-mb-3">{{ $task->body }}</div>
+                    <div class="card tw-mb-3">
+                        <form action="{{ $task->path() }}" method="POST">
+                            @method('PATCH')
+                            @csrf
+                            <div class="tw-flex">
+                                <input name="body" value="{{ $task->body }}" class="tw-w-full tw-border-none focus:tw-ring-2 focus:tw-ring-blue
+                                 {{ $task->completed ? 'tw-text-grey' : ''}}" >
+                                <input type="checkbox" name="completed" onchange="this.form.submit()" {{ $task->completed ? 'checked' : ''}}>
+                            </div>
+                        </form>
+
+                    </div>
                 @endforeach
 
                 <div class="card tw-mb-3">
@@ -36,8 +47,21 @@
 
             <div>
                 <h2 class="tw-text-lg tw-text-grey tw-font-normal">General Notes</h2>
+                <form action="{{ $project->path() }}" method="post">
+                    @csrf
+                    @method('PATCH')
+                    <textarea name="notes" class="card tw-w-full tw-mb-4" style="min-height: 200px;">{{ $project->notes }}</textarea>
+                    <button type="submit" class="button tw-border-none">Save</button>
+                </form>
+                @if ($errors->any())
 
-                <textarea class="card tw-w-full" style="min-height: 200px;">Lorem ipsum.</textarea>
+                    <div class="field tw-mt-6">
+                        @foreach ($errors->all() as $error)
+                            <li class="tw-text-sm tw-text-red">{{ $error }}</li>
+                        @endforeach
+
+                    </div>
+                @endif
             </div>
         </div>
 
@@ -47,6 +71,7 @@
         </div>
     </div>
 </main>
+
 
 
 @endsection

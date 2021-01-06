@@ -13,6 +13,7 @@ module.exports = {
       'blue': '#47cdff',
       'blue-light': '#8ae2fe',
       'black': '#000000',
+      'red': '#ff0000',
     },
     boxShadow: {
       'DEFAULT': '0 0 5px 0 rgba(0, 0, 0, 0.08)'
