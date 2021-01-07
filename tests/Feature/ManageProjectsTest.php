@@ -59,7 +59,7 @@ class ManageProjectsTest extends TestCase
 
     /** @test */
     public function a_user_can_update_a_project(){
-
+        $this->withoutExceptionHandling();
         $project = ProjectFactory::create();
 
         $this->actingAs($project->owner)
@@ -132,7 +132,7 @@ class ManageProjectsTest extends TestCase
     /** @test */
     public function a_project_requires_a_decription(){
 
-        
+
         $this->signIn();
 
         $attributes = Project::factory()->raw(['description' => '']);

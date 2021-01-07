@@ -68,6 +68,7 @@
 
         <div class="lg:tw-w-1/4 tw-px-3 tw-mt-9">
             @include('projects.card')
+            @include('projects.activity.card')
         </div>
     </div>
 </main>

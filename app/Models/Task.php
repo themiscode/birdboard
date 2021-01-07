@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\RecordsActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
     use HasFactory;
+    use RecordsActivity;
     protected $guarded = [];
 
 
@@ -20,6 +22,8 @@ class Task extends Model
         'completed' => 'boolean',
     ];
 
+    protected static $recordableEvents = ['created', 'deleted'];
+
     /**
     * The relationships that should be touched on save.
     *
@@ -28,31 +32,17 @@ class Task extends Model
     protected $touches = ['project'];
 
 
-    protected static function boot() {
-
-        parent::boot();
-
-        static::created( function ($task) {
-            $task->project->recordActivity('created_task');
-        });
-
-
-        static::updated( function ($task) {
-            if(! $task->completed)  return;
-
-            $task->project->recordActivity('completed_task');
-        });
-    }
-
-
     public function complete()
     {
         $this->update(['completed' => true]);
+        $this->recordActivity('completed_task');
+
     }
 
     public function incomplete()
     {
         $this->update(['completed' => false]);
+        $this->recordActivity('incompleted_task');
     }
 
     public function project()
@@ -64,4 +54,5 @@ class Task extends Model
     {
         return "/projects/{$this->project->id}/tasks/{$this->id}";
     }
+
 }
