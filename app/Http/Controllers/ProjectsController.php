@@ -25,7 +25,7 @@ class ProjectsController extends Controller
      */
     public function show(Project $project) {
 
-        $this->authorize('update', $project->owner);
+        $this->authorize('update', $project);
 
         return view('projects.show', compact('project'));
 
