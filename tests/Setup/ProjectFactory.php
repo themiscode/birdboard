@@ -6,7 +6,9 @@ namespace Tests\Setup;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
-
+/**
+ * @mixin \Tests\Setup\ProjectFactory
+ */
 class ProjectFactory {
 
     protected $tasksCount = 0;

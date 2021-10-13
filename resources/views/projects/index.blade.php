@@ -27,4 +27,19 @@
 
 </main>
 
+<modal name="hello-world" class="tw-p-4 tw-bg-card tw-rounded-lg">
+    <h1  class="tw-font-normal tw-mb-16 tw-text-center">Let's start something new</h1>
+
+    <div class="tw-flex">
+        <div class="tw-flex-1 tw-mr-4">
+            <div class="tw-mb-4">
+                <label for="title" class="tw-text-sm">Title</label>
+                <input type="text" name="" id="title" class="tw-border tw-border-muted-light tw-py-1 tw-px-2 tw-text-xs">
+            </div>
+        </div>
+        <div class="tw-flex-1 tw-ml-4"></div>
+    </div>
+</modal>
+
+<a href="" @click.prevent="$modal.show('hello-world')">Show Modal</a>
 @endsection

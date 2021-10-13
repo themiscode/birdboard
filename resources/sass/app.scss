@@ -12,11 +12,19 @@
 @tailwind components;
 @tailwind utilities;
 
-.button {
-    @apply tw-bg-blue tw-text-white tw-no-underline tw-rounded-lg tw-text-sm tw-py-2 tw-px-5 hover:tw-no-underline;
-    box-shadow: 0 2px 7px 0 #b0eaff;
+@import 'components/button.scss';
+@import 'components/card.scss';
+
+@import 'themes/light.scss';
+@import 'themes/dark.scss';
+
+body,
+button {
+    @apply tw-text-default;
 }
 
-.card {
-    @apply tw-bg-white tw-rounded-lg tw-shadow tw-p-5;
-}
+
+
+
+
+

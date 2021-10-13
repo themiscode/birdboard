@@ -12,7 +12,7 @@ use Redirect;
 class ProjectsController extends Controller
 {
     public function index() {
-        $projects = auth()->user()->projects;
+        $projects = auth()->user()->accessibleProjects();
         return view('projects.index', compact('projects'));
     }
 
@@ -25,7 +25,7 @@ class ProjectsController extends Controller
      */
     public function show(Project $project) {
 
-        $this->authorize('update', $project);
+        $this->authorize('update', $project->owner);
 
         return view('projects.show', compact('project'));
 
@@ -62,11 +62,21 @@ class ProjectsController extends Controller
      *
      *
      */
-    public function update(ProjectUpdateRequest $request, Project $project)
+    public function update(Project $project)
     {
-        $project->update($request->validated());
+        $this->authorize('update', $project);
+
+        $project->update($this->validateRequest());
 
         return redirect($project->path());
+    }
+
+    public function destroy(Project $project)
+    {
+        $this->authorize('manage', $project);
+
+        $project->delete();
+        return redirect('/projects');
     }
 
     protected function validateRequest()
